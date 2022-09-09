@@ -157,7 +157,7 @@ with st.spinner("Chargement du modèle..."):
     
       width, height = image.size
       draw = ImageDraw.Draw(image)
-      font = ImageFont.truetype("arial.ttf", 20)
+      font = ImageFont.load_default()
     
       offset_mapping = encoding.pop('offset_mapping') #création des vecteurs words
       encoding.to(device)
