@@ -26,6 +26,7 @@ from transformers import LayoutLMv3Processor, AutoModelForTokenClassification
 from transformers.utils.logging import set_verbosity_error as set_verbosity_error_transfo
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 import pytesseract
+import pdf2image
 from pdf2image import convert_from_bytes
 from streamlit_lottie import st_lottie_spinner
 import time
