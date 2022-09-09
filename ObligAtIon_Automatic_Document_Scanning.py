@@ -69,8 +69,7 @@ if st.session_state.document_upload:
      
 
 with st.spinner("Chargement du modèle..."):
-    
-    pytesseract.pytesseract.tesseract_cmd = r'C:\Users\nicolas.julien\AppData\Local\Tesseract-OCR\tesseract.exe'
+ 
     path_model = r'NicolasJulienData/ObligAtIon'
 
     
