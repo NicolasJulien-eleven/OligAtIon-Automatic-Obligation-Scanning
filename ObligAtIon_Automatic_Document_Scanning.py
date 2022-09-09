@@ -31,6 +31,8 @@ from pdf2image import convert_from_bytes
 from streamlit_lottie import st_lottie_spinner
 import time
 
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 st.set_page_config("ObligAtIon", page_icon = "https://play-lh.googleusercontent.com/atlogEde4hQhEmhZEerOxv16b_2JHUOfvSTQBCOk5bgIPcnqgOWdhZOU5UEbnM3pk30=w240-h480-rw")
 
 st.image("https://www.mazarsrecrute.fr/assets/logos/logoMazars.png", width = 600)
