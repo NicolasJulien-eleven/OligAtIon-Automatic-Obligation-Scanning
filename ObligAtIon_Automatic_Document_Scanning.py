@@ -43,6 +43,9 @@ if 'vecteur_utile' not in st.session_state:
     st.session_state.vecteur_utile = []
 # permet de ne pas recharger le modèle à chaque fois
 
+if 'compteur_image' not in st.session_state:
+    st.session_state.compteur_image = 0
+
 def load_lottie_url(url: str):
     r = requests.get(url)
     if r.status_code != 200:
@@ -310,6 +313,7 @@ if uploaded_file is not None:   #and st.button("C'est parti !")
             with st_lottie_spinner(lottie_process, key = 'process', width=300, speed=0.5):
                 
                 st.session_state.predictions_effectuee = Inference(convert_from_bytes(fichier_pdf))
+                st.session_state.compteur_image = 0
         
     inf = st.session_state.predictions_effectuee
     keys = inf[0].keys()
@@ -342,7 +346,19 @@ if uploaded_file is not None:   #and st.button("C'est parti !")
                 st.markdown(html_element, unsafe_allow_html=True)
         k+=1  
      
-    st.image(inf[2])
+    images_traitees = inf[2]
+    taille = len(images_traitees)
+    
+    col1, mid, col2 = st.columns([10,20,10])
+    with col1:
+        if st.button("Previous"):
+            st.session_state.compteur_image = max(st.session_state.compteur_image, 0)
+    with col2:
+        if st.button("Next"):
+            st.session_state.compteur_image = min(st.session_state.compteur_image, taille)
+    
+     
+    st.image(images_traitees[st.session_state.compteur_image])
     
     if 'ancien_doc' not in st.session_state:
         st.session_state.ancien_doc = 0
