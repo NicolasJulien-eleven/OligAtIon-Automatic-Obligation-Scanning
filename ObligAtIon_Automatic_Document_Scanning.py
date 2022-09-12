@@ -358,7 +358,7 @@ if uploaded_file is not None:   #and st.button("C'est parti !")
         if st.button("Next"):
             st.session_state.compteur_image = min(st.session_state.compteur_image+1, taille-1)
     with col1:
-      st.write("Page ", st.session_state.compteur_image, "/", taille)
+      st.write("Page ", st.session_state.compteur_image+1, "/", taille)
     
      
     st.image(images_traitees[st.session_state.compteur_image])
