@@ -351,14 +351,14 @@ if uploaded_file is not None:   #and st.button("C'est parti !")
     
     col1, mid, col2 = st.columns([70,11,9])
     
-    with col1:
-      st.write("Page ", st.session_state.compteur_image, "/", taille)
     with mid:
         if st.button("Previous"):
             st.session_state.compteur_image = max(st.session_state.compteur_image-1, 0)
     with col2:
         if st.button("Next"):
             st.session_state.compteur_image = min(st.session_state.compteur_image+1, taille-1)
+    with col1:
+      st.write("Page ", st.session_state.compteur_image, "/", taille)
     
      
     st.image(images_traitees[st.session_state.compteur_image])
