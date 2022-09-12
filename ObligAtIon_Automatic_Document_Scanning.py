@@ -349,7 +349,7 @@ if uploaded_file is not None:   #and st.button("C'est parti !")
     images_traitees = inf[2]
     taille = len(images_traitees)
     
-    col1, mid, col2 = st.columns([7,1,1])
+    col1, mid, col2 = st.columns([70,15,10])
     with mid:
         if st.button("Previous"):
             st.session_state.compteur_image = max(st.session_state.compteur_image-1, 0)
