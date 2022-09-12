@@ -352,10 +352,10 @@ if uploaded_file is not None:   #and st.button("C'est parti !")
     col1, mid, col2 = st.columns([10,20,10])
     with col1:
         if st.button("Previous"):
-            st.session_state.compteur_image = max(st.session_state.compteur_image, 0)
+            st.session_state.compteur_image = max(st.session_state.compteur_image-1, 0)
     with col2:
         if st.button("Next"):
-            st.session_state.compteur_image = min(st.session_state.compteur_image, taille)
+            st.session_state.compteur_image = min(st.session_state.compteur_image+1, taille)
     
      
     st.image(images_traitees[st.session_state.compteur_image])
