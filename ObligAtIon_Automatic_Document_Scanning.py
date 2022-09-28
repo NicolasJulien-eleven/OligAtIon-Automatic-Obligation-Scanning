@@ -227,7 +227,7 @@ with st.spinner("Chargement du modèle..."):
      index = 0
      array_images = []
 
-     for path in tqdm(path_list):
+     for path in stqdm(path_list):
        pred = prediction(path, device)
        array_images.append(pred[0])
        if index == 0:
