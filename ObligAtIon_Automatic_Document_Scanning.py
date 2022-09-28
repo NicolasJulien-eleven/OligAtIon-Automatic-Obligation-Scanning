@@ -223,8 +223,7 @@ with st.spinner("Chargement du modèle..."):
      return(category_prediction, liste_suspects)
 
    def Inference(path_list, display_images = True, device = 'cpu'):
-
-     index = 0
+      index = 0
      array_images = []
 
      for path in tqdm(path_list):
