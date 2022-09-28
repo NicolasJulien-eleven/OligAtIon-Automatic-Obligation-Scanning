@@ -203,25 +203,26 @@ with st.spinner("Chargement du modèle..."):
       return(image, predict)
    
    def search_best_prediction(df):
-      ancien_indice = -1
-      liste_suspects = []
-      phrase = ''
-      for idx, mot in zip(df.index, df['mots']):
-        if idx != 0:
-          if idx == ancien_indice + 1 and mot not in phrase: 
-            phrase = phrase + mot
-          else:
-            if len(phrase)>0:
-              liste_suspects.append(phrase[1:])
-            phrase = mot 
-        ancien_indice = idx
 
-      liste_suspects.append(phrase[1:])
-      category_prediction = mode(liste_suspects)
+  ancien_indice = -1
+  liste_suspects = []
+  phrase = ''
+  for idx, mot in zip(df.index, df['mots']):
+    if idx != 0:
+      if idx == ancien_indice + 1 and mot not in phrase: 
+        phrase = phrase + mot
+      else:
+        if len(phrase)>0:
+          liste_suspects.append(phrase[1:])
+        phrase = mot 
+    ancien_indice = idx
 
-      return(category_prediction, liste_suspects)
+  liste_suspects.append(phrase[1:])
+  category_prediction = mode(liste_suspects)
 
-   def Inference(path_list, display_images = True, device = 'cpu'):
+  return(category_prediction, liste_suspects)
+
+def Inference(path_list, display_images = True, device = 'cpu'):
 
   index = 0
   array_images = []
