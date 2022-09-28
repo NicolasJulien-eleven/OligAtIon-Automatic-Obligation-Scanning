@@ -256,8 +256,6 @@ with st.spinner("Chargement du modèle..."):
 
      dic_best_predictions = {category: pred for category,pred in zip(true_label_list, best_final_predictions)}
      dic_liste_predictions = {category: liste for category,liste in zip(true_label_list, liste_final_predictions)}
-     st.write(dic_best_predictions)
-     st.write(dic_liste_predictions)
 
      return(dic_best_predictions, dic_liste_predictions, array_images)
 
