@@ -133,31 +133,6 @@ with st.spinner("Chargement du modèle..."):
       b = Counter(array) 
       return(b.most_common(1)[0][0])
     
-    def search_best_prediction(df):
-    
-      ancien_indice = -1
-      liste_suspects = []
-      phrase = ''
-      IoB_array = []
-      for idx, mot, IoB in zip(df.index, df['mots'],  df['origin_label']):
-        if idx != 0:
-    
-          if idx == ancien_indice + 1: 
-            phrase = phrase + mot + ' '
-          else:
-            if len(IoB_array)>1:
-              if IoB_array[0]=='B' and 'I' in np.unique(IoB_array[1:]):
-                liste_suspects.append(phrase)
-            phrase = mot 
-            IoB_array = []  
-          ancien_indice = idx
-          IoB_array.append(IoB)
-    
-      liste_suspects.append(phrase)
-      category_prediction = mode(liste_suspects)
-    
-      return(category_prediction, liste_suspects)
-    
     def draw_encoding(encoding, image, device = 'cpu'):
     
       width, height = image.size
@@ -227,44 +202,68 @@ with st.spinner("Chargement du modèle..."):
       
       return(image, predict)
     
-    def Inference(images, device = 'cpu'):
-    
-      index = 0
-      array_images = []
-    
-      for image in stqdm(images):
-        pred = prediction(image, device)
-        array_images.append(pred[0])
-        if index == 0:
-          dataframe = pred[1]
-        else : 
-          dataframe = pd.concat([dataframe, pred[1]])
-    
-        index +=1
-    
-      dataframe['origin_label'] = dataframe['label'].apply(lambda x : x[0])
-      dataframe['label'] = dataframe['label'].apply(lambda x : x[2:])
-    
-      best_final_predictions = []
-      liste_final_predictions = []
-    
-      for Category in true_label_list:
-        df_category = dataframe.groupby(dataframe['label']==Category)
-        if len(df_category) < 2:
-    
-          best_final_predictions.append('None')
-          liste_final_predictions.append('None')
-    
-        else:
-          df_category = pd.DataFrame(df_category)[1].iloc[1]
-          array_pred = search_best_prediction(df_category)
-          best_final_predictions.append(array_pred[0])
-          liste_final_predictions.append(array_pred[1])
-    
-      dic_best_predictions = {category: pred for category,pred in zip(true_label_list, best_final_predictions)}
-      dic_liste_predictions = {category: liste for category,liste in zip(true_label_list, liste_final_predictions)}
-    
-      return(dic_best_predictions, dic_liste_predictions, array_images)
+    def search_best_prediction(df):
+
+     ancien_indice = -1
+     liste_suspects = []
+     phrase = ''
+     for idx, mot in zip(df.index, df['mots']):
+       if idx != 0:
+         if idx == ancien_indice + 1 and mot not in phrase: 
+           phrase = phrase + mot
+         else:
+           if len(phrase)>0:
+             liste_suspects.append(phrase[1:])
+           phrase = mot 
+       ancien_indice = idx
+
+     liste_suspects.append(phrase[1:])
+     category_prediction = mode(liste_suspects)
+
+     return(category_prediction, liste_suspects)
+
+   def Inference(path_list, display_images = True, device = 'cpu'):
+
+     index = 0
+     array_images = []
+
+     for path in tqdm(path_list):
+       pred = prediction(path, device)
+       array_images.append(pred[0])
+       if index == 0:
+         dataframe = pred[1]
+       else : 
+         dataframe = pd.concat([dataframe, pred[1]])
+
+       index +=1
+
+     if display_images == True:
+       for image in array_images:
+         display(image)
+
+
+     best_final_predictions = []
+     liste_final_predictions = []
+
+     for Category in true_label_list:
+
+       df_category = dataframe.groupby(dataframe['label']==Category)
+
+       if len(df_category) < 2: #Si pas de prédictions
+
+         best_final_predictions.append('None')
+         liste_final_predictions.append('None')
+
+       else:
+         df_category = pd.DataFrame(df_category)[1].iloc[1]
+         array_pred = search_best_prediction(df_category)
+         best_final_predictions.append(array_pred[0])
+         liste_final_predictions.append(array_pred[1])
+
+     dic_best_predictions = {category: pred for category,pred in zip(true_label_list, best_final_predictions)}
+     dic_liste_predictions = {category: liste for category,liste in zip(true_label_list, liste_final_predictions)}
+
+     return(dic_best_predictions, dic_liste_predictions)
 
        #------------------------------------------------------------------------------------------------------------------------------------------------
 
