@@ -204,66 +204,66 @@ with st.spinner("Chargement du modèle..."):
    
    def search_best_prediction(df):
 
-        ancien_indice = -1
-        liste_suspects = []
-        phrase = ''
-        for idx, mot in zip(df.index, df['mots']):
-          if idx != 0:
-            if idx == ancien_indice + 1 and mot not in phrase: 
-              phrase = phrase + mot
-            else:
-              if len(phrase)>0:
-                liste_suspects.append(phrase[1:])
-              phrase = mot 
-          ancien_indice = idx
+     ancien_indice = -1
+     liste_suspects = []
+     phrase = ''
+     for idx, mot in zip(df.index, df['mots']):
+       if idx != 0:
+         if idx == ancien_indice + 1 and mot not in phrase: 
+           phrase = phrase + mot
+         else:
+           if len(phrase)>0:
+             liste_suspects.append(phrase[1:])
+           phrase = mot 
+       ancien_indice = idx
 
-        liste_suspects.append(phrase[1:])
-        category_prediction = mode(liste_suspects)
+     liste_suspects.append(phrase[1:])
+     category_prediction = mode(liste_suspects)
 
-        return(category_prediction, liste_suspects)
+     return(category_prediction, liste_suspects)
 
-      def Inference(path_list, display_images = True, device = 'cpu'):
+   def Inference(path_list, display_images = True, device = 'cpu'):
 
-        index = 0
-        array_images = []
+     index = 0
+     array_images = []
 
-        for path in tqdm(path_list):
-          pred = prediction(path, device)
-          array_images.append(pred[0])
-          if index == 0:
-            dataframe = pred[1]
-          else : 
-            dataframe = pd.concat([dataframe, pred[1]])
+     for path in tqdm(path_list):
+       pred = prediction(path, device)
+       array_images.append(pred[0])
+       if index == 0:
+         dataframe = pred[1]
+       else : 
+         dataframe = pd.concat([dataframe, pred[1]])
 
-          index +=1
+       index +=1
 
-        if display_images == True:
-          for image in array_images:
-            display(image)
+     if display_images == True:
+       for image in array_images:
+         display(image)
 
 
-        best_final_predictions = []
-        liste_final_predictions = []
+     best_final_predictions = []
+     liste_final_predictions = []
 
-        for Category in true_label_list:
+     for Category in true_label_list:
 
-          df_category = dataframe.groupby(dataframe['label']==Category)
+       df_category = dataframe.groupby(dataframe['label']==Category)
 
-          if len(df_category) < 2: #Si pas de prédictions
+       if len(df_category) < 2: #Si pas de prédictions
 
-            best_final_predictions.append('None')
-            liste_final_predictions.append('None')
+         best_final_predictions.append('None')
+         liste_final_predictions.append('None')
 
-          else:
-            df_category = pd.DataFrame(df_category)[1].iloc[1]
-            array_pred = search_best_prediction(df_category)
-            best_final_predictions.append(array_pred[0])
-            liste_final_predictions.append(array_pred[1])
+       else:
+         df_category = pd.DataFrame(df_category)[1].iloc[1]
+         array_pred = search_best_prediction(df_category)
+         best_final_predictions.append(array_pred[0])
+         liste_final_predictions.append(array_pred[1])
 
-        dic_best_predictions = {category: pred for category,pred in zip(true_label_list, best_final_predictions)}
-        dic_liste_predictions = {category: liste for category,liste in zip(true_label_list, liste_final_predictions)}
+     dic_best_predictions = {category: pred for category,pred in zip(true_label_list, best_final_predictions)}
+     dic_liste_predictions = {category: liste for category,liste in zip(true_label_list, liste_final_predictions)}
 
-        return(dic_best_predictions, dic_liste_predictions)
+     return(dic_best_predictions, dic_liste_predictions)
 
        #------------------------------------------------------------------------------------------------------------------------------------------------
 
