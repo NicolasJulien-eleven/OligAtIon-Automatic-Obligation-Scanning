@@ -222,7 +222,7 @@ with st.spinner("Chargement du modèle..."):
 
      return(category_prediction, liste_suspects)
 
-    def Inference(path_list, display_images = True, device = 'cpu'):
+    def Inference(path_list, device = 'cpu'):
 
      index = 0
      array_images = []
@@ -236,11 +236,6 @@ with st.spinner("Chargement du modèle..."):
          dataframe = pd.concat([dataframe, pred[1]])
 
        index +=1
-
-     if display_images == True:
-       for image in array_images:
-         display(image)
-
 
      best_final_predictions = []
      liste_final_predictions = []
@@ -263,7 +258,7 @@ with st.spinner("Chargement du modèle..."):
      dic_best_predictions = {category: pred for category,pred in zip(true_label_list, best_final_predictions)}
      dic_liste_predictions = {category: liste for category,liste in zip(true_label_list, liste_final_predictions)}
 
-     return(dic_best_predictions, dic_liste_predictions)
+     return(dic_best_predictions, dic_liste_predictions, array_images)
 
        #------------------------------------------------------------------------------------------------------------------------------------------------
 
