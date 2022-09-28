@@ -81,15 +81,14 @@ with st.spinner("Chargement du modèle..."):
     #Definition des fonctions utiles------------------------------------------------------------------------------------------------------------------------------------------------
     
     #Création label list
-    label_list = ['B-Call Option', 'I-Call Option', 'B-Coupon Period', 'I-Coupon Period', 
-                   'B-First Payment Date', 'I-First Payment Date', 'B-Fixed Rate', 'I-Fixed Rate', 
-                   'B-Issue Date', 'I-Issue Date', 'B-Maturity', 'I-Maturity', 'B-Nominal', 'I-Nominal', 
-                   'B-Risk Factor', 'I-Risk Factor', 'Other']
+    label_list = ['Call Option', 'Coupon Period',
+                   'First Payment Date', 'Fixed Rate', 
+                   'Issue Date', 'Maturity', 'Nominal', 
+                   'Risk Factor', 'Other']
     
     true_label_list = ['Nominal', 'Issue Date', 'First Payment Date', 'Maturity', 'Coupon Period', 'Fixed Rate', 'Risk Factor', 'Call Option']
     
-    color_list = ['magenta', 'magenta', 'yellow','yellow', 'cornflowerblue','cornflowerblue','darkorange','darkorange',
-                  'cyan','cyan','navy','navy','red','red','yellowgreen','yellowgreen','grey']
+    color_list = ['magenta','yellow', 'cornflowerblue','darkorange','cyan','navy','red','yellowgreen','grey']
     
     label2color = {k.lower(): v for k,v in zip(label_list, color_list)}
     
