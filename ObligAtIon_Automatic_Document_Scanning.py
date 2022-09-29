@@ -238,7 +238,6 @@ with st.spinner("Chargement du modèle..."):
 
      best_final_predictions = []
      liste_final_predictions = []
-     st.write(array_images)
 
      for Category in true_label_list:
 
@@ -341,7 +340,6 @@ if uploaded_file is not None:   #and st.button("C'est parti !")
         k+=1  
      
     images_traitees = inf[2]
-    st.image(images_traitees)
     taille = len(images_traitees)
     
     col1, mid, col2 = st.columns([70,11,9])
