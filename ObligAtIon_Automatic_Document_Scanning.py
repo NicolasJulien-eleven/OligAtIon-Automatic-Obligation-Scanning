@@ -238,6 +238,7 @@ with st.spinner("Chargement du modèle..."):
 
      best_final_predictions = []
      liste_final_predictions = []
+     st.write(array_images)
 
      for Category in true_label_list:
 
