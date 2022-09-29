@@ -35,8 +35,6 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 st.set_page_config("ObligAtIon", page_icon = "https://play-lh.googleusercontent.com/atlogEde4hQhEmhZEerOxv16b_2JHUOfvSTQBCOk5bgIPcnqgOWdhZOU5UEbnM3pk30=w240-h480-rw")
 
-st.image("https://www.mazarsrecrute.fr/assets/logos/logoMazars.png", width = 600)
-
 st.header("Scan automatique d'obligations grâce à Layout LMV3")
    
 if 'vecteur_utile' not in st.session_state:
